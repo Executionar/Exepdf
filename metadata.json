@@ -1,0 +1,5 @@
+{
+  "name": "ExePDF",
+  "description": "A professional, privacy-focused, fully local PDF toolset. Merge, split, compress, and organize PDFs directly in your browser without uploading data to any server.",
+  "requestFramePermissions": []
+}
