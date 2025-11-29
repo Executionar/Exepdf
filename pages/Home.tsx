@@ -10,7 +10,7 @@ const TOOLS: ToolDef[] = [
   // Organize
   { id: 'merge-pdf', title: 'Merge PDF', description: 'Combine PDFs in the order you want.', icon: Files, category: 'organize', accepts: '.pdf', multiple: true },
   { id: 'split-pdf', title: 'Split PDF', description: 'Separate one page or a whole set.', icon: Scissors, category: 'organize', accepts: '.pdf', multiple: false },
-  { id: 'add-pages', title: 'Add Pages', description: 'Insert pages into a PDF file.', icon: FilePlus, category: 'organize', isNew: true, accepts: '.pdf', multiple: false },
+  { id: 'add-pages', title: 'Add Pages', description: 'Insert pages into a PDF file.', icon: FilePlus, category: 'organize', isNew: true, accepts: '.pdf', multiple: true },
   { id: 'remove-pages', title: 'Remove Pages', description: 'Select pages you want to remove.', icon: Trash, category: 'organize', accepts: '.pdf', multiple: false },
   { id: 'rotate-pdf', title: 'Rotate PDF', description: 'Rotate your PDF pages.', icon: RotateCw, category: 'organize', accepts: '.pdf', multiple: false },
   

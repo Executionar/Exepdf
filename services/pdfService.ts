@@ -98,8 +98,12 @@ export const addPagesToPdf = async (baseFile: File, filesToAdd: File[], config: 
   const pageCount = basePdf.getPageCount();
 
   let insertIndex = 0;
-  if (config.position === 'end') insertIndex = pageCount;
-  else if (config.position === 'specific') insertIndex = Math.min(pageCount, Math.max(0, (config.specificIndex || 1) - 1));
+  if (config.position === 'end') {
+      insertIndex = pageCount;
+  } else if (config.position === 'specific') {
+      // If user says "After page 1", index should be 1.
+      insertIndex = Math.min(pageCount, Math.max(0, (config.specificIndex || 1)));
+  }
 
   const pagesToInsert: any[] = [];
   
@@ -252,10 +256,18 @@ export const protectPdf = async (file: File, password: string): Promise<Blob> =>
 // Mock for tools that require complex server-side processing (OCR, Office conversion)
 // In a real fully local app, you'd use WASM libraries like Tesseract.js or mammoth.js
 export const mockConversion = async (file: File, targetFormat: string): Promise<Blob> => {
-    // Simulate processing delay
+    // Return a dummy PDF
     await new Promise(resolve => setTimeout(resolve, 1500));
-    const buffer = await readFileAsArrayBuffer(file);
     
-    // For demo, just return the original file but pretending it's converted
-    return new Blob([buffer], { type: file.type }); 
+    // Create a real valid PDF explaining that this is a demo feature for non-wasm tools
+    const pdf = await PDFDocument.create();
+    const page = pdf.addPage();
+    const font = await pdf.embedFont(StandardFonts.Helvetica);
+    
+    page.drawText(`Placeholder Conversion for: ${file.name}`, { x: 50, y: 700, size: 24, font });
+    page.drawText(`Target Format: ${targetFormat}`, { x: 50, y: 660, size: 18, font });
+    page.drawText(`(Client-side conversion of office docs requires WASM libs)`, { x: 50, y: 620, size: 12, font });
+    
+    const pdfBytes = await pdf.save();
+    return new Blob([pdfBytes], { type: 'application/pdf' });
 };
